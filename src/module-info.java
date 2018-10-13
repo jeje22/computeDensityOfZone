@@ -6,4 +6,5 @@
  *
  */
 module boeglin.jerome.POI {
+	requires java.desktop;
 }

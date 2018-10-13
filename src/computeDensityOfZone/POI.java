@@ -42,4 +42,9 @@ public class POI {
 	{
 		this.lat = lat;
 	}
+	
+	public String toString()
+	{
+		return this.id+" : lon "+this.lon+", lat "+this.lat;
+	}
 }
