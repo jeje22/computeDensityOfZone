@@ -47,4 +47,12 @@ public class POI {
 	{
 		return this.id+" : lon "+this.lon+", lat "+this.lat;
 	}
+
+	public void printAll()
+	{
+		System.out.println("[min_lat: "+PoiManager.roundToHalfDown(this.getLat())+" ; max_lat: "
+				+PoiManager.roundToHalfUp(this.getLat())+"; min_lon: "
+				+PoiManager.roundToHalfDown(this.getLon())+" ; max_lon: "
+				+PoiManager.roundToHalfUp(this.getLon())+"]");
+	}
 }

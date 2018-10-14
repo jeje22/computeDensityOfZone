@@ -54,7 +54,7 @@ public class compute {
 			PoiManager manager=new PoiManager(pois);
 			System.out.println("number of POI in area : "+manager.getPoiForArea(minLat,minLon));
 
-			manager.findBiggestAreas(2).forEach(System.out::println);
+			manager.findBiggestAreas(2).forEach(POI::printAll);
 		}
 		catch (IOException e)
 		{
