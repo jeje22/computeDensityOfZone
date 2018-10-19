@@ -19,11 +19,13 @@ public class compute
             if (Files.exists(argPath))
             {
                 inputPath = argPath;
-            } else
+            }
+            else
             {
                 System.err.println("file " + argv[0] + " doesn't exist, fallback to default");
             }
-        } else
+        }
+        else
         {
             System.out.println("no argument given, using default input value");
         }
@@ -35,7 +37,8 @@ public class compute
         if (manager == null)
         {
             System.err.println("error while getting Pois");
-        } else
+        }
+        else
         {
             System.out.println("number of POI in area : " + manager.getPoiForArea(minLat, minLon));
 

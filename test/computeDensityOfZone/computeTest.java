@@ -7,10 +7,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class computeTest {
+public class computeTest
+{
 
     @Test
-    public void GetNumberOfPoiInArea() {
+    public void GetNumberOfPoiInArea()
+    {
         PoiManager manager = PoiManager.Create(Paths.get("data/input.tsv"));
 
         double minLat = 6.5, minLon = -7;
@@ -19,7 +21,8 @@ public class computeTest {
     }
 
     @Test
-    public void FindTwoBiggestAreas() {
+    public void FindTwoBiggestAreas()
+    {
         PoiManager manager = PoiManager.Create(Paths.get("data/input.tsv"));
 
         Assertions.assertNotNull(manager);

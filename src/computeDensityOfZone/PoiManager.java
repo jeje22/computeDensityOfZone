@@ -118,7 +118,8 @@ public class PoiManager
                     .forEach(x -> pois.add(new Poi(x[0], Double.parseDouble(x[1]), Double.parseDouble(x[2]))));
 
             manager = new PoiManager(pois);
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
         }
