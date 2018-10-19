@@ -1,40 +1,10 @@
 package computeDensityOfZone;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class compute {
-
-	private final static String separator="\t";
-
-	private static PoiManager GetPoiManagerWithPois()
-	{
-		Path inputPath= Paths.get("data/input.tsv");
-
-		List<Poi> pois=new ArrayList<>();
-		PoiManager manager=null;
-		try (Stream<String> stream = Files.lines(inputPath)) {
-			// skip 1 to skip the column information
-			// I didn't implement a way to check the order of the columns meaning it must always have the same order to work
-			stream.skip(1).map(x -> x.split(separator))
-					.forEach(x -> pois.add(new Poi(x[0], Double.parseDouble(x[1]), Double.parseDouble(x[2]))));
-
-			manager = new PoiManager(pois);
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
-
-		return manager;
-	}
 
 	public static void main(String[] argv)
 	{
@@ -62,9 +32,16 @@ public class compute {
 		// reading file
 		double minLat=6.5, minLon=-7;
 
-		PoiManager manager=GetPoiManagerWithPois();
-		System.out.println("number of POI in area : "+manager.getPoiForArea(minLat,minLon));
+		PoiManager manager=PoiManager.Create(inputPath);
+		if(manager==null)
+		{
+			System.err.println("error while getting Pois");
+		}
+		else
+		{
+			System.out.println("number of POI in area : "+manager.getPoiForArea(minLat,minLon));
 
-		manager.findBiggestAreas(2).forEach(Poi::printAll);
+			manager.findBiggestAreas(2).forEach(Poi::printAll);
+		}
 	}
 }
