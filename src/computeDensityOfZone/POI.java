@@ -1,12 +1,13 @@
 package computeDensityOfZone;
 
-public class POI {
+public class Poi {
 
+	final static double step=0.5;
 	private String id;
 	private double lon;
 	private double lat;
 	
-	public POI(String id, double lon, double lat)
+	public Poi(String id, double lon, double lat)
 	{
 		this.setId(id);
 		this.setLon(lon);
@@ -54,5 +55,34 @@ public class POI {
 				+PoiManager.roundToHalfUp(this.getLat())+"; min_lon: "
 				+PoiManager.roundToHalfDown(this.getLon())+" ; max_lon: "
 				+PoiManager.roundToHalfUp(this.getLon())+"]");
+	}
+
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		if (!(o instanceof Poi)) {
+			return false;
+		}
+		Poi poi = (Poi)o;
+		return poi.getLat()==this.getLat() && poi.getLon()==this.getLon();
+	}
+
+	public int hashCode() {
+		int result = Double.hashCode(lat);
+		result = 31 * result + Double.hashCode(lon);
+		return result;
+	}
+
+	/**
+	 * round edges of this element
+	 * Warning : this changes your element
+	 * @return
+	 */
+	public Poi ToArea()
+	{
+		this.lat=PoiManager.roundToHalfDown(this.lat);
+		this.lon=PoiManager.roundToHalfDown(this.lon);
+		return this;
 	}
 }

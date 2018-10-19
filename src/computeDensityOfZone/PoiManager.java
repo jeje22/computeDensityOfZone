@@ -18,7 +18,7 @@ public class PoiManager {
 		return roundToHalfDown(value)+0.5;
 	}
 
-	private class PoiWithWeight extends POI{
+	private class PoiWithWeight extends Poi{
 		public int getWeight() {
 			return weight;
 		}
@@ -29,24 +29,18 @@ public class PoiManager {
 
 		private int weight;
 
-		public PoiWithWeight(POI poi)
+		public PoiWithWeight(Poi poi)
 		{
 			super(poi.getId(),poi.getLon(),poi.getLat());
 			this.weight=1;
 		}
-
-		public POI getPoi()
-		{
-			return null;//super(this.getId(),this.getLon(),this.getLat());
-		}
 	}
 	
-	private List<POI> pois;
-	final double step=0.5;
+	private List<Poi> pois;
 	Point minBoundary;
 	Point maxBoundary;
 	
-	public PoiManager(List<POI> pois)
+	public PoiManager(List<Poi> pois)
 	{
 		this.pois=pois;
 		this.minBoundary= new Point(-90,-180);
@@ -55,13 +49,13 @@ public class PoiManager {
 
 	int getPoiForArea(double minLat, double minLon)
 	{
-		double maxLat=minLat+step;
-		double maxLon=minLon+step;
+		double maxLat=minLat+Poi.step;
+		double maxLon=minLon+Poi.step;
 
 		int res=0;
 
 		// TODO : should sort pois and only start when parameters are near and then break;
-		for(POI poi : pois)
+		for(Poi poi : pois)
 		{
 			if(poi.getLat()>minLat && poi.getLat()<maxLat
 				&& poi.getLon()>minLon && poi.getLon()<maxLon)
@@ -73,13 +67,11 @@ public class PoiManager {
 		return res;
 	}
 
-	List<POI> findBiggestAreas(int N)
+	List<Poi> findBiggestAreas(int N)
 	{
-		List<POI> res=new ArrayList<>();
-
 		List<PoiWithWeight> temp=new ArrayList<>();
 
-		for(POI poi : pois)
+		for(Poi poi : pois)
 		{
 			if(temp.size()==0)
 			{
@@ -105,15 +97,15 @@ public class PoiManager {
 			}
 		}
 
-		return temp.stream().sorted(Comparator.comparingInt(PoiWithWeight::getWeight).reversed()).limit(2).collect(Collectors.toList());
+		return temp.stream().sorted(Comparator.comparingInt(PoiWithWeight::getWeight).reversed()).limit(2).map(x -> x.ToArea()).collect(Collectors.toList());
 	}
 
-	public List<POI> getPois()
+	public List<Poi> getPois()
 	{
 		return pois;
 	}
 
-	public void setPois(List<POI> pois)
+	public void setPois(List<Poi> pois)
 	{
 		this.pois = pois;
 	}

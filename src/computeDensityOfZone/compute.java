@@ -13,6 +13,29 @@ import java.util.stream.Stream;
 public class compute {
 
 	private final static String separator="\t";
+
+	private static PoiManager GetPoiManagerWithPois()
+	{
+		Path inputPath= Paths.get("data/input.tsv");
+
+		List<Poi> pois=new ArrayList<>();
+		PoiManager manager=null;
+		try (Stream<String> stream = Files.lines(inputPath)) {
+			// skip 1 to skip the column information
+			// I didn't implement a way to check the order of the columns meaning it must always have the same order to work
+			stream.skip(1).map(x -> x.split(separator))
+					.forEach(x -> pois.add(new Poi(x[0], Double.parseDouble(x[1]), Double.parseDouble(x[2]))));
+
+			manager = new PoiManager(pois);
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		return manager;
+	}
+
 	public static void main(String[] argv)
 	{
 		Path inputPath=Paths.get("data/input.tsv");
@@ -37,28 +60,11 @@ public class compute {
 		}
 		
 		// reading file
-		List<POI> pois=new ArrayList<POI>();
-		List<String> columns;
-		try (Stream<String> stream = Files.lines(inputPath))
-		{
-			/*columns=Stream.of(stream.findFirst().get().split(separator)).map(x -> x.substring(1)).collect(Collectors.toList());
-			int idIndex=columns.indexOf("id");
-			int lonIndex=columns.indexOf("lon");
-			int latIndex=columns.indexOf("lat");*/
-			
-			List<String[]> data=stream.skip(1).map(x -> x.split(separator)).collect(Collectors.toList());
-			data.forEach(x->pois.add(new POI(x[0],Double.parseDouble(x[1]),Double.parseDouble(x[2]))));
+		double minLat=6.5, minLon=-7;
 
-			double minLat=6.5, minLon=-7;
+		PoiManager manager=GetPoiManagerWithPois();
+		System.out.println("number of POI in area : "+manager.getPoiForArea(minLat,minLon));
 
-			PoiManager manager=new PoiManager(pois);
-			System.out.println("number of POI in area : "+manager.getPoiForArea(minLat,minLon));
-
-			manager.findBiggestAreas(2).forEach(POI::printAll);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+		manager.findBiggestAreas(2).forEach(Poi::printAll);
 	}
 }
