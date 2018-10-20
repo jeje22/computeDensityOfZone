@@ -106,7 +106,7 @@ public class PoiManager
         return temp.stream().sorted(Comparator.comparingInt(PoiWithWeight::getWeight).reversed()).limit(N).map(x -> x.ToArea()).collect(Collectors.toList());
     }
 
-    static PoiManager Create(Path inputPath)
+    public static PoiManager Create(Path inputPath)
     {
         PoiManager manager = null;
         try (Stream<String> stream = Files.lines(inputPath))

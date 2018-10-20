@@ -3,6 +3,7 @@ package computeDensityOfZone;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 public class compute
 {
@@ -40,9 +41,19 @@ public class compute
         }
         else
         {
+            System.out.println("Please enter the following informations to get the number of POI in the area :");
+            System.out.println("latitude : ");
+            Scanner sc = new Scanner(System.in);
+            minLat = sc.nextDouble();
+            System.out.println("longitude : ");
+            minLon = sc.nextDouble();
             System.out.println("number of POI in area : " + manager.getPoiForArea(minLat, minLon));
 
-            manager.findBiggestAreas(2).forEach(Poi::printAll);
+            int N = 2;
+            System.out.println("Please enter the number of areas for which you want to find the most populated areas: ");
+            N = sc.nextInt();
+
+            manager.findBiggestAreas(N).forEach(Poi::printAll);
         }
     }
 }
