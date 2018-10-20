@@ -28,3 +28,7 @@ hs_err_pid*
 /bin/
 /out/
 /target/
+
+#ignore for the api
+/api/bin
+/api/target/
